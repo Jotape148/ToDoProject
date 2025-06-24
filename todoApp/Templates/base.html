@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}ToDo{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light navbar-custom py-2">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <a class="navbar-brand fw-bold me-4" href="{% url 'home' %}">ToDo</a>
+        <ul class="navbar-nav me-3">
+          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+          
+          <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+        </ul>
+      </div>
+      <!-- formulário de nova tarefa no header -->
+      <form class="d-flex" method="post" style="max-width:400px;">
+        {% csrf_token %}
+        <input
+        class="form-control me-2"
+        type="search"
+        placeholder="add todo item"
+        aria-label="Search"
+        name="title"
+        />
+        <button class="btn btn-primary" >Adicionar</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="container my-4">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

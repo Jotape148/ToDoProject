@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Home – To-Do{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Suas Tarefas</h1>
+
+  <!-- Pendentes -->
+  <h2>Pendentes</h2>
+  <div class="list-group mb-4">
+    {% for todo in pending %}
+      <div class="list-group-item d-flex justify-content-between align-items-center mb-2">
+        <div>
+          {{ todo.title }}
+          <small class="text-muted ms-3">
+            {{ todo.created_at|date:"H:i" }} / {{ todo.created_at|date:"d/m/Y" }}
+          </small>
+        </div>
+        <div class="btn-group">
+          <!-- mini-form Concluir -->
+          <form method="post" action="{% url 'home' %}" style="display:inline">
+            {% csrf_token %}
+            <input type="hidden" name="toggle_id" value="{{ todo.pk }}">
+            <button type="submit" class="btn btn-sm btn-success">Concluir</button>
+          </form>
+          <a href="{% url 'edit' todo.pk %}"   class="btn btn-sm btn-info text-white">Editar</a>
+          <a href="{% url 'delete' todo.pk %}" class="btn btn-sm btn-danger">Deletar</a>
+        </div>
+      </div>
+    {% empty %}
+      <div class="alert alert-secondary">Nenhuma tarefa pendente.</div>
+    {% endfor %}
+  </div>
+
+  <!-- Concluídas -->
+  <h2>Concluídas</h2>
+  <div class="list-group">
+    {% for todo in completed %}
+      <div class="list-group-item list-group-item-success d-flex justify-content-between align-items-center mb-2">
+        <div>
+          {{ todo.title }}
+          <small class="text-muted ms-3">
+            {{ todo.created_at|date:"H:i" }} / {{ todo.created_at|date:"d/m/Y" }}
+          </small>
+        </div>
+        <div class="btn-group">
+          <a href="{% url 'edit' todo.pk %}"   class="btn btn-sm btn-info text-white">Editar</a>
+          <a href="{% url 'delete' todo.pk %}" class="btn btn-sm btn-danger">Deletar</a>
+        </div>
+      </div>
+    {% empty %}
+      <div class="alert alert-secondary">Nenhuma tarefa concluída.</div>
+    {% endfor %}
+  </div>
+{% endblock %}

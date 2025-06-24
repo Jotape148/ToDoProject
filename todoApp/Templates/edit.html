@@ -1,0 +1,18 @@
+
+{% extends 'base.html' %}
+{% block title %}Editar Tarefa{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Editar Tarefa</h1>
+  <form method="post" class="row g-2">
+    {% csrf_token %}
+    <div class="col-7">{{ form.title }}</div>
+    <div class="col-3 form-check">
+      {{ form.isCompleted }} {{ form.isCompleted.label_tag }}
+    </div>
+    <div class="col-2">
+      <button type="submit" class="btn btn-primary">Salvar</button>
+      <a href="{% url 'home' %}" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+{% endblock %}
